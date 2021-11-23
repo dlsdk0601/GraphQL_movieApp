@@ -12,6 +12,11 @@ const GET_MOVIE = gql`
             language
             rating
             description_intro
+            isLiked @client
+        }
+        suggestions( id:$id){
+          id
+          medium_cover_image
         }
     }
 `
@@ -25,16 +30,11 @@ const Detail = () => {
      return (
         <Container>
             <Column>
-                <Title>{loading ? "loading..." : data.movie.title}</Title>
-                {
-                    !loading && data.movie && 
-                    <>
-                        <Subtitle>{data.movie.language} · {data.movie.rating}</Subtitle>
-                        <Description>{data.movie.description_intro}</Description>
-                    </>
-                }
+                <Title>{loading ? "loading..." : `${data.movie.title} ${data.movie.isLiked ? "Good" : "Bad"}`}</Title>
+                <Subtitle>{data?.movie?.language} · {data?.movie?.rating}</Subtitle>
+                <Description>{data?.movie?.description_intro}</Description>
             </Column>
-            <Poster bg={ data && data.movie ? data.movie.medium_cover_image : null}></Poster>
+            <Poster bg={ data?.movie?.medium_cover_image}></Poster>
         </Container>
   );
 }
