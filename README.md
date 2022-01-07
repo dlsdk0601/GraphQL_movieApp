@@ -20,8 +20,10 @@
 <br />
 
 > index.js에서 Provider로 감싸준다.
+
 <br />
 index.js
+
 ``` 
     import client from "./apollo";
     import {ApolloProvider} from "@apollo/react-hooks";
@@ -31,13 +33,14 @@ index.js
             <App />
         </ApolloProvider>, document.getElementById('root') 
     );
-
 ```
 <br />
 
 > apollo.js 파일을 만들어 가져올 api 주소 셋팅
+
 <br />
 apollo.js
+
 ```
     import ApolloClient from 'apollo-boost';
 
