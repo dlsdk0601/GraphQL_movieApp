@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/GraphQL_movieApp/static/js/main.cd4c7974.chunk.js",
+    "main.js.map": "/GraphQL_movieApp/static/js/main.cd4c7974.chunk.js.map",
+    "runtime-main.js": "/GraphQL_movieApp/static/js/runtime-main.33525152.js",
+    "runtime-main.js.map": "/GraphQL_movieApp/static/js/runtime-main.33525152.js.map",
+    "static/js/2.79677d3b.chunk.js": "/GraphQL_movieApp/static/js/2.79677d3b.chunk.js",
+    "static/js/2.79677d3b.chunk.js.map": "/GraphQL_movieApp/static/js/2.79677d3b.chunk.js.map",
+    "index.html": "/GraphQL_movieApp/index.html",
+    "static/js/2.79677d3b.chunk.js.LICENSE.txt": "/GraphQL_movieApp/static/js/2.79677d3b.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.33525152.js",
+    "static/js/2.79677d3b.chunk.js",
+    "static/js/main.cd4c7974.chunk.js"
+  ]
+}
