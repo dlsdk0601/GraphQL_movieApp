@@ -37,8 +37,8 @@ const Movie = ( {id, bg, isLiked} ) => {
         <Container>
             <Link to={`/${id}`}>
                 <Poster bg={bg} />
-                <p onClick={toggleMovie}>{isLiked ? "Unlike" : "Like"}</p>
             </Link>
+            <p style={{cursor: "pointer"}} onClick={toggleMovie}>{isLiked ? "Unlike" : "Like"}</p>
             
         </Container>
     );
@@ -56,7 +56,7 @@ const Container = styled.div`
 
 const Poster = styled.div`
   background-image: url(${props => props.bg});
-  height: 100%;
+  height: 90%;
   width: 100%;
   background-size: cover;
   background-position: center center;
