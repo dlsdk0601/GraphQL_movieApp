@@ -1,9 +1,109 @@
-# GraphQl Start
+# GraphQL Start
+
+> GraphQL API 섹션을 복습 차원에서 다시 정리 했으니, client도 다시 복습 합니다.
+
+<br />
+
+# New
+
+<br />
+
+### install
+
+<br />
+
+> Client단에서 GraphQL을 사용하기 위해서 해당 라이브러리를 다운 받아야한다. @apollo/client와 graphql을 필요로 한다.
+
+<br />
+
+```
+    npm i @apollo/client graphql
+```
+
+<br />
+
+### Provider
+
+<br />
+
+index.js에서 App.js를 ApolloProvider로 감싸준다. Provider로 감싸는 이유는 children 컴포넌트에서 Apollo로 접근 할 수 있게 하기 위해서 입니다.
+
+<br />
+
+### client
+
+<br />
+
+client를 정의 해줘야한다. ApolloClient를 이용해 uri와 cache 설정을 해준다.
+Axios를 빗대어 설명하자면, Axios.create를 이용해 baseURL과 headers 등을 설정 해주는것과 비슷하다.
+
+<br />
+
+```
+    import { ApolloClient, InMemoryCache } from "@apollo/client";
+
+    const client = new ApolloClient({
+    uri: "http://localhost:4000/",
+    cache: new InMemoryCache(),
+    });
+```
+
+<br />
+
+포트 번호 4000은 GraphQL API를 만들었던 작업물이 4000번으로 돌아가서 설정했다.
+
+<br />
+
+### useApolloClient
+
+<br />
+
+GraphQL로 데이터를 받아오기 위해서 useApolloClient를 사용한다.
+query 함수를 사용하여, GraphQL 쿼리문을 작성하면 해당 데이터를 불러온다.
+
+<br />
+
+```
+    import { gql, useApolloClient } from "@apollo/client";
+    import React, { useEffect, useState } from "react";
+
+    export default function Movies() {
+        const client = useApolloClient();
+        const [movies, setMovies] = useState([]);
+
+        useEffect(() => {
+            client
+            .query({
+                query: gql`
+                {
+                    allMovies {
+                    title
+                    }
+                }
+                `,
+            })
+            .then((res) => setMovies(res.data.allMovies));
+        }, []);
+
+        return (
+            <ul>
+            {movies.map((movie) => (
+                <li key={movie.id}>{movie.title}</li>
+            ))}
+            </ul>
+        );
+        }
+```
+
+<br />
+
+# Old Version
 
 > GraphQL이란? 페이스북에서 만든 쿼리 언어
 > <br />지금까지 접해왔던 SQL과는 다른 쿼리 언어이다
 
 <br /><br />
+
 1. setUp
 
 ```
@@ -13,8 +113,9 @@
 <br />
 
 > 현재는 업데이트 된 버전으로 두가지가 하나로 통합 되었다.
+
 ```
-    npm install  @apollo/client graphql 
+    npm install  @apollo/client graphql
 ```
 
 <br />
@@ -24,16 +125,17 @@
 <br />
 index.js
 
-``` 
+```
     import client from "./apollo";
     import {ApolloProvider} from "@apollo/react-hooks";
 
-    ReactDOM.render( 
+    ReactDOM.render(
         <ApolloProvider client={client}>
             <App />
-        </ApolloProvider>, document.getElementById('root') 
+        </ApolloProvider>, document.getElementById('root')
     );
 ```
+
 <br />
 
 > apollo.js 파일을 만들어 가져올 api 주소 셋팅
@@ -53,7 +155,7 @@ apollo.js
             Mutation: {
                 toggleLikeMovie: (_, { id, isLiked}, {cache}) => {
                         cache.writeData({
-                            id: `Movie:${id}`, 
+                            id: `Movie:${id}`,
                             data: {
                             isLiked: !isLiked
                             }
@@ -71,13 +173,13 @@ apollo.js
 2. Query 문 응용
 
 > apollo-boost와 @apollo/react-hooks을 통해 각각 gql과 useQuery를 import
-<br />
-<br />
+> <br /> > <br />
 > GET_MOVIES 라는 변수에 gql을 써서 가져오고 싶은 data 설정
 
 <br />
 
 Home.js
+
 ```
     import {gql} from "apollo-boost";
     import {useQuery} from "@apollo/react-hooks";
@@ -99,7 +201,7 @@ Home.js
     const Home = () => {
 
         const { loading, error, data } = useQuery(GET_MOVIES);
-        
+
         return (
             <Container>
                 <Header>
@@ -110,11 +212,11 @@ Home.js
                         <Movies>
                         {
                             data?.movies?.map(m => (
-                                <Movie 
-                                key={m.id} 
-                                isLiked={m.isLiked} 
-                                id={m.id} 
-                                bg={m.medium_cover_image} 
+                                <Movie
+                                key={m.id}
+                                isLiked={m.isLiked}
+                                id={m.id}
+                                bg={m.medium_cover_image}
                                 />
                             ))
                         }
@@ -147,7 +249,7 @@ Movie.js
         query getMovie($id: Int!){
             movie(id: $id){
                 title
-                medium_cover_image 
+                medium_cover_image
                 language
                 rating
                 description_intro
@@ -177,7 +279,7 @@ Movie.js
                     <Poster bg={bg} />
                     <p onClick={toggleMovie}>{isLiked ? "Unlike" : "Like"}</p>
                 </Link>
-                
+
             </Container>
         );
     }
