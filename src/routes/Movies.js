@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import React from "react";
+import { Link } from "react-router-dom";
 import { ALL_MOVIES } from "../fetch/Get";
 
 export default function Movies() {
@@ -7,7 +8,8 @@ export default function Movies() {
   // useQuery 사용법
 
   const { data, loading, error } = useQuery(ALL_MOVIES);
-
+  console.log("data===");
+  console.log(data);
   if (loading) {
     return <h1>Loading...</h1>;
   }
@@ -32,7 +34,9 @@ export default function Movies() {
   return (
     <ul>
       {data.allMovies.map((mv) => (
-        <li key={mv.id}>{mv.title}</li>
+        <li key={mv.id}>
+          <Link to={`/movies/${mv.id}`}>{mv.title}</Link>
+        </li>
       ))}
     </ul>
   );
