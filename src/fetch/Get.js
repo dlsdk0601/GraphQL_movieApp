@@ -5,6 +5,7 @@ export const ALL_MOVIES = gql`
     allMovies {
       title
       id
+      medium_cover_image
     }
   }
 `;
@@ -14,6 +15,8 @@ export const GET_MOVIE = gql`
     movie(id: $movieId) {
       id
       title
+      medium_cover_image
+      rating
     }
   }
 `;
