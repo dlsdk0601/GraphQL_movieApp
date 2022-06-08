@@ -101,6 +101,36 @@ query 함수를 사용하여, GraphQL 쿼리문을 작성하면 해당 데이터
 
 <br />
 
+Apollo 클라이언트 쿼리에는 GraphQL 서버의 스키마에 정의되지 않은 로컬 전용 필드가 포함될 수 있습니다.
+@client 지시문은 isLiked가 로컬 전용 필드임을 Apollo Client에 알립니다.
+isLiked는 로컬 전용이므로 Apollo Client는 name과 값을 가져오기 위해 서버에 보내는 쿼리에서 이를 생략합니다.
+최종 쿼리 결과는 모든 로컬 및 원격 필드가 채워진 후에 반환됩니다.
+
+```
+    const onClick = () => {
+        // apollo client도 서버에서 데이터를 받아오면 캐시에 저장하게 되는데
+        // client onluy field 이기에 캐시에 저장된 정보에 접근하여 저장함.
+        // MovieFragment라는 키값에 저장함 fragment형식은 저대로 지켜줘야한다.
+        //즉, MovieFragment 외에는 지켜야할 형식
+
+        cache.writeFragment({
+        id: `Movie:${movieId}`,
+        // : 다음에 띄워쓰기 했다가 필드에 저장이 안되는 이슈가 발생했었다
+
+        fragment: gql`
+            fragment MovieFragment on Movie {
+            isLiked
+            }
+        `,
+        data: {
+            isLiked: !data.movie.isLiked,
+        },
+        });
+    };
+```
+
+<br />
+
 # Old Version
 
 > GraphQL이란? 페이스북에서 만든 쿼리 언어

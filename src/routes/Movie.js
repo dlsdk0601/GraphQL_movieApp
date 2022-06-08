@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { gql, useApolloClient, useQuery } from "@apollo/client";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { GET_MOVIE } from "../fetch/Get";
@@ -7,18 +7,43 @@ import styled from "styled-components";
 export default function Movie() {
   const { id: movieId } = useParams();
 
-  const { data, loading } = useQuery(GET_MOVIE, {
+  const {
+    data,
+    loading,
+    client: { cache },
+  } = useQuery(GET_MOVIE, {
     variables: {
       movieId,
     },
   });
+
+  const onClick = () => {
+    // apollo client도 서버에서 데이터를 받아오면 캐시에 저장하게 되는데
+    // client onluy field 이기에 캐시에 저장된 정보에 접근하여 저장함.
+    // MovieFragment라는 키값에 저장함 fragment형식은 저대로 지켜줘야한다.
+    cache.writeFragment({
+      id: `Movie:${movieId}`,
+      fragment: gql`
+        fragment MovieFragment on Movie {
+          isLiked
+        }
+      `,
+      data: {
+        isLiked: !data.movie.isLiked,
+      },
+    });
+  };
+  console.log(data?.movie);
+  console.log(movieId);
 
   return (
     <Container>
       <Column>
         <Title>{loading ? "Loading..." : `${data.movie?.title}`}</Title>
         <Subtitle>⭐️ {data?.movie?.rating}</Subtitle>
-        <button>{data?.movie?.isLiked ? "Unklike" : "Like"}</button>
+        <button onClick={onClick}>
+          {data?.movie?.isLiked ? "Unklike" : "Like"}
+        </button>
       </Column>
       <Image bg={data?.movie?.medium_cover_image} />
     </Container>
