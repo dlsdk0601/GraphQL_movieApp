@@ -9,8 +9,7 @@ export default function Movies() {
   // useQuery 사용법
 
   const { data, loading, error } = useQuery(ALL_MOVIES);
-  console.log("data===");
-  console.log(data);
+
   if (loading) {
     return <h1>Loading...</h1>;
   }

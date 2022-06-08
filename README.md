@@ -97,6 +97,10 @@ query 함수를 사용하여, GraphQL 쿼리문을 작성하면 해당 데이터
 
 <br />
 
+### Local only field (client only field)
+
+<br />
+
 # Old Version
 
 > GraphQL이란? 페이스북에서 만든 쿼리 언어

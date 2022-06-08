@@ -18,6 +18,7 @@ export default function Movie() {
       <Column>
         <Title>{loading ? "Loading..." : `${data.movie?.title}`}</Title>
         <Subtitle>⭐️ {data?.movie?.rating}</Subtitle>
+        <button>{data?.movie?.isLiked ? "Unklike" : "Like"}</button>
       </Column>
       <Image bg={data?.movie?.medium_cover_image} />
     </Container>

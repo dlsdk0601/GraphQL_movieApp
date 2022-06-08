@@ -17,6 +17,7 @@ export const GET_MOVIE = gql`
       title
       medium_cover_image
       rating
+      isLiked @client
     }
   }
 `;
